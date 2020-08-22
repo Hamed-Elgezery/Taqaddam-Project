@@ -3,8 +3,26 @@ import 'package:spring_button/spring_button.dart';
 import 'package:flutter/cupertino.dart';
 import 'Drawer.dart';
 import 'Buttons.dart';
+import 'package:audioplayers/audio_cache.dart';
 
 class Menu extends StatelessWidget {
+  static AudioCache player = AudioCache();
+
+  @override
+  void initState() {
+    player.load('Sounds/normal_click.mp3');
+  }
+
+  void startPressed() {
+    player.play('Sounds/normal_click.mp3');
+    print("Start");
+  }
+
+  void settPressed() {
+    player.play('Sounds/normal_click.mp3');
+    print("Settings");
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -62,7 +80,7 @@ class Menu extends StatelessWidget {
                           Colors.lightBlueAccent,
                           context,
                         ),
-                        onTapDown: (_) => print("object"),
+                        onTapDown: (_) => startPressed(),
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.end,
@@ -70,7 +88,7 @@ class Menu extends StatelessWidget {
                           SpringButton(
                             SpringButtonType.OnlyScale,
                             settings(context),
-                            onTapDown: (_) => print("object"),
+                            onTapDown: (_) => settPressed(),
                           ),
                         ],
                       )

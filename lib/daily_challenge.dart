@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:spring_button/spring_button.dart';
 import 'Drawer.dart';
 import 'Buttons.dart';
+import 'package:audioplayers/audio_cache.dart';
 import 'package:intl/intl.dart';
 
 class Challenge extends StatefulWidget {
@@ -12,11 +13,26 @@ class Challenge extends StatefulWidget {
 
 class _ChallengeState extends State<Challenge> {
   var now = new DateTime.now();
+  static AudioCache player = AudioCache();
+
   String daysStreak = '0';
   List<String> title = ["Why don't you go and make someone's day?!\n\n"];
   List<String> challenges = [
     "Write something meaningful on a piece of paper and put it on a random car!"
   ];
+
+  void completedPressed() {
+    player.play('Sounds/completed.mp3');
+  }
+
+  void skipPressed() {
+    player.play('Sounds/normal_click.mp3');
+  }
+
+  @override
+  void initState() {
+    player.loadAll(['Sounds/normal_click.mp3', 'Sounds/normal_click.mp3']);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -92,14 +108,12 @@ class _ChallengeState extends State<Challenge> {
                     SpringButton(
                       SpringButtonType.OnlyScale,
                       row('Completed!', Colors.greenAccent, context),
-                      onTapDown: (_) => print("object"),
+                      onTapDown: (_) => completedPressed(),
                     ),
                     SpringButton(
                       SpringButtonType.OnlyScale,
                       row('Skip!', Colors.redAccent, context),
-                      onTapDown: (_) => print(DateTime.now()
-                          .difference(DateTime(2020, 9, 7, 17, 30))
-                          .inDays),
+                      onTapDown: (_) => skipPressed(),
                     ),
                   ],
                 ),

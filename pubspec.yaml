@@ -31,6 +31,8 @@ dependencies:
   spring_button: ^1.0.13
   intl: ^0.15.8
   shared_preferences: ^0.5.8
+  audioplayers: ^0.15.1
+
 
 
 
@@ -43,12 +45,9 @@ dev_dependencies:
 
 # The following section is specific to Flutter.
 flutter:
-
-  # The following line ensures that the Material Icons font is
-  # included with your application, so that you can use the icons in
-  # the material Icons class.
   assets:
     - Images/
+    - assets/Sounds/
   uses-material-design: true
   fonts:
     - family: Roboto_Light
@@ -63,6 +62,7 @@ flutter:
     - family: Overlock-Black
       fonts:
         - asset: Fonts/Overlock-Regular.ttf
+
   #         style: italic
   #   - family: Trajan Pro
   #     fonts:
