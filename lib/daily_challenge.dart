@@ -13,8 +13,9 @@ class Challenge extends StatefulWidget {
 class _ChallengeState extends State<Challenge> {
   var now = new DateTime.now();
   String daysStreak = '0';
+  List<String> title = ["Why don't you go and make someone's day?!\n\n"];
   List<String> challenges = [
-    "Why don't you go and make someone's day?!\nWrite something meaningful on a piece of paper and put it on a car!"
+    "Write something meaningful on a piece of paper and put it on a random car!"
   ];
 
   @override
@@ -62,12 +63,25 @@ class _ChallengeState extends State<Challenge> {
           child: Column(
             children: <Widget>[
               Container(
-                padding: EdgeInsets.only(top: 75),
-                height: 200,
-                child: Text(
-                  challenges[0],
+                padding: EdgeInsets.only(
+                    top: MediaQuery.of(context).size.height * 0.08),
+                height: MediaQuery.of(context).size.height * 0.3,
+                child: RichText(
                   textAlign: TextAlign.center,
-                  style: TextStyle(fontSize: 25, fontFamily: 'Roboto_Light'),
+                  text: TextSpan(
+                    text: title[0],
+                    style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 25,
+                        fontFamily: "Roboto_Bold"),
+                    children: <TextSpan>[
+                      TextSpan(
+                        text: challenges[0],
+                        style: TextStyle(
+                            fontFamily: "Overlock-Regular", fontSize: 20),
+                      ),
+                    ],
+                  ),
                 ),
               ),
               Container(
@@ -97,3 +111,9 @@ class _ChallengeState extends State<Challenge> {
     );
   }
 }
+
+//                child: Text(
+//                  challenges[0],
+//                  textAlign: TextAlign.center,
+//                  style: TextStyle(fontSize: 25, fontFamily: 'Roboto_Light'),
+//                ),
