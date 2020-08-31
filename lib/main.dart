@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:taqaddam/Launch.dart';
 import 'package:taqaddam/daily_challenge.dart';
+import 'Levels/Menu.dart';
 
 void main() {
   runApp(MainNav());
@@ -12,8 +13,8 @@ class MainNav extends StatelessWidget {
     return MaterialApp(
       initialRoute: '/',
       routes: {
-        '/': (context) => Challenge(),
-        'DailyChallenges': (context) => null
+        '/': (BuildContext context) => LevelsMenu(),
+        '/DailyChallenges': (BuildContext context) => Challenge(),
       },
     );
   }

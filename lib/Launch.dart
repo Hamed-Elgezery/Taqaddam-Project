@@ -13,18 +13,19 @@ class Menu extends StatelessWidget {
     player.load('Sounds/normal_click.mp3');
   }
 
-  void startPressed() {
-    player.play('Sounds/normal_click.mp3');
-    print("Start");
-  }
-
-  void settPressed() {
-    player.play('Sounds/normal_click.mp3');
-    print("Settings");
-  }
-
   @override
   Widget build(BuildContext context) {
+    void startPressed() {
+      player.play('Sounds/normal_click.mp3');
+      Navigator.pushNamed(context, '/DailyChallenges');
+      print("Start");
+    }
+
+    void settPressed() {
+      player.play('Sounds/normal_click.mp3');
+      print("Settings");
+    }
+
     return MaterialApp(
       home: Scaffold(
         body: Container(

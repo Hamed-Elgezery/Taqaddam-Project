@@ -62,6 +62,12 @@ flutter:
     - family: Overlock-Black
       fonts:
         - asset: Fonts/Overlock-Regular.ttf
+    - family: Overlock-Bold
+      fonts:
+        - asset: Fonts/Overlock-Bold.ttf
+    - family: Overlock-Regular
+      fonts:
+        - asset: Fonts/Overlock-Regular.ttf
 
   #         style: italic
   #   - family: Trajan Pro

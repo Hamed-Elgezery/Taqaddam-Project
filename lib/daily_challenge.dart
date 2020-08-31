@@ -21,14 +21,6 @@ class _ChallengeState extends State<Challenge> {
     "Write something meaningful on a piece of paper and put it on a random car!"
   ];
 
-  void completedPressed() {
-    player.play('Sounds/completed.mp3');
-  }
-
-  void skipPressed() {
-    player.play('Sounds/normal_click.mp3');
-  }
-
   @override
   void initState() {
     player.loadAll(['Sounds/normal_click.mp3', 'Sounds/normal_click.mp3']);
@@ -36,6 +28,15 @@ class _ChallengeState extends State<Challenge> {
 
   @override
   Widget build(BuildContext context) {
+    void completedPressed() {
+      player.play('Sounds/completed.mp3');
+    }
+
+    void skipPressed() {
+      player.play('Sounds/normal_click.mp3');
+      Navigator.pop(context, '/DailyChallenges');
+    }
+
     return Scaffold(
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(MediaQuery.of(context).size.height *
@@ -125,9 +126,3 @@ class _ChallengeState extends State<Challenge> {
     );
   }
 }
-
-//                child: Text(
-//                  challenges[0],
-//                  textAlign: TextAlign.center,
-//                  style: TextStyle(fontSize: 25, fontFamily: 'Roboto_Light'),
-//                ),
