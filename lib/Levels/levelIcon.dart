@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:spring_button/spring_button.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:audioplayers/audio_cache.dart';
+import 'package:taqaddam/levelsStorage.dart';
+import 'package:taqaddam/levelsStorage.dart';
 
 class ButtonDesign extends StatelessWidget {
   ButtonDesign(this.levelNumber);
@@ -9,7 +11,6 @@ class ButtonDesign extends StatelessWidget {
   final int levelNumber;
   static AudioCache player = AudioCache();
 
-  @override
   void initState() {
     player.loadAll(['Sounds/normal_click.mp3', 'Sounds/normal_click.mp3']);
   }
@@ -24,7 +25,9 @@ class ButtonDesign extends StatelessWidget {
       width: MediaQuery.of(context).size.width * 0.26,
       height: MediaQuery.of(context).size.width * 0.26,
       decoration: BoxDecoration(
-        color: Colors.blueAccent,
+        color: (levelsDone[levelNumber - 1] == 1)
+            ? Colors.yellow
+            : Colors.blueAccent,
         borderRadius: BorderRadius.all(radius),
       ),
       child: Center(
@@ -46,18 +49,18 @@ class LevelButton extends StatelessWidget {
   final int levelID;
   static AudioCache player = AudioCache();
 
-  @override
   void initState() {
     player.loadAll(['Sounds/normal_click.mp3', 'Sounds/normal_click.mp3']);
   }
 
-  void pressed() {
-    player.play('Sounds/normal_click.mp3');
-    //TODO: Neavigate to specific level
-  }
-
   @override
   Widget build(BuildContext context) {
+    void pressed() {
+      player.play('Sounds/normal_click.mp3');
+      Navigator.popAndPushNamed(context, '/Challenge');
+      level = levelID - 1;
+    }
+
     return SpringButton(
       SpringButtonType.OnlyScale,
       ButtonDesign(levelID),
@@ -66,6 +69,7 @@ class LevelButton extends StatelessWidget {
   }
 }
 
+// ignore: must_be_immutable
 class NavDesign extends StatelessWidget {
   NavDesign(this.forward);
 
@@ -96,29 +100,29 @@ class NavDesign extends StatelessWidget {
   }
 }
 
-class PageNavigator extends StatelessWidget {
-  PageNavigator(this.forward);
-  bool forward;
-  static AudioCache player = AudioCache();
-
-  @override
-  void initState() {
-    player.loadAll(['Sounds/normal_click.mp3', 'Sounds/normal_click.mp3']);
-  }
-
-  void pressed() {
-    player.play('Sounds/normal_click.mp3');
-    //TODO: Neavigate to specific level
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      child: SpringButton(
-        SpringButtonType.OnlyScale,
-        NavDesign(forward),
-        onTapDown: (_) => pressed(),
-      ),
-    );
-  }
-}
+//
+//// ignore: must_be_immutable
+//class PageNavigator extends StatelessWidget {
+//  PageNavigator(this.forward);
+//  bool forward;
+//  static AudioCache player = AudioCache();
+//
+//  void initState() {
+//    player.loadAll(['Sounds/normal_click.mp3', 'Sounds/normal_click.mp3']);
+//  }
+//
+//  void pressed() {
+//    player.play('Sounds/normal_click.mp3');
+//  }
+//
+//  @override
+//  Widget build(BuildContext context) {
+//    return Container(
+//      child: SpringButton(
+//        SpringButtonType.OnlyScale,
+//        NavDesign(forward),
+//        onTapDown: (_) => pressed(),
+//      ),
+//    );
+//  }
+//}

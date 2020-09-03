@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:audioplayers/audio_cache.dart';
+import 'levelsStorage.dart';
 
-class ComingSoon extends StatelessWidget {
+class DailyCompleted extends StatelessWidget {
   static AudioCache player = AudioCache();
 
   void initState() {
@@ -12,7 +13,9 @@ class ComingSoon extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     void prevPage() {
-      Navigator.pop(context, '/DailyChallenges');
+      daily = [];
+      dailyIntro = [];
+      Navigator.pop(context, '/Done');
       player.play('Sounds/normal_click.mp3');
     }
 
@@ -23,7 +26,7 @@ class ComingSoon extends StatelessWidget {
         child: AppBar(
           automaticallyImplyLeading: false,
           title: Text(
-            'Coming Soon',
+            'Daily Challenge',
             style: TextStyle(
                 fontSize: MediaQuery.of(context).size.width * 0.07,
                 fontFamily: 'Roboto_Bold'),
@@ -45,7 +48,7 @@ class ComingSoon extends StatelessWidget {
           color: Colors.white,
           child: Center(
             child: Text(
-              'We hope you are enjoying!\nNew Levels Coming Soon!',
+              'Great work!\nYou have done your daily challenge!',
               textAlign: TextAlign.center,
               style: TextStyle(
                 color: Colors.grey,

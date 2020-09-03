@@ -5,7 +5,6 @@ import 'package:taqaddam/Drawer.dart';
 import 'package:taqaddam/Buttons.dart';
 import 'package:audioplayers/audio_cache.dart';
 import 'package:taqaddam/levelsStorage.dart';
-import 'dart:io';
 
 // ignore: must_be_immutable
 class Challenge extends StatefulWidget {
@@ -14,7 +13,6 @@ class Challenge extends StatefulWidget {
 }
 
 class _ChallengeState extends State<Challenge> {
-  var now = new DateTime.now();
   static AudioCache player = AudioCache();
 
 //  String daysStreak = '0';
@@ -33,17 +31,19 @@ class _ChallengeState extends State<Challenge> {
   Widget build(BuildContext context) {
     void completedPressed() {
       player.play('Sounds/completed.mp3');
+      levelsDone[level] = 1;
       if (level + 1 < levels.length) {
         setState(() {
           level++;
         });
       } else {
-        //TODO: Navigate to coming soon
+        Navigator.popAndPushNamed(context, '/ComingSoon');
       }
     }
 
-    void backPressed() {
-      //TODO: Part of connecting all pages together
+    void prevPage() {
+      Navigator.popAndPushNamed(context, '/LevelsMenu');
+      player.play('Sounds/normal_click.mp3');
     }
 
     return Scaffold(
@@ -68,7 +68,7 @@ class _ChallengeState extends State<Challenge> {
               color: Colors.white,
               size: MediaQuery.of(context).size.width * 0.08,
             ),
-            onPressed: () => print('Pressed\n'),
+            onPressed: () => prevPage(),
           ),
         ),
       ),

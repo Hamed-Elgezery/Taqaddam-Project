@@ -4,11 +4,11 @@ import 'package:flutter/cupertino.dart';
 import 'Drawer.dart';
 import 'Buttons.dart';
 import 'package:audioplayers/audio_cache.dart';
+import 'levelsStorage.dart';
 
 class Menu extends StatelessWidget {
   static AudioCache player = AudioCache();
 
-  @override
   void initState() {
     player.load('Sounds/normal_click.mp3');
   }
@@ -17,18 +17,22 @@ class Menu extends StatelessWidget {
   Widget build(BuildContext context) {
     void dailyChallenge() {
       player.play('Sounds/normal_click.mp3');
-      Navigator.pushNamed(context, '/DailyChallenges');
+      if (daily.length != 0) {
+        Navigator.pushNamed(context, '/DailyChallenges');
+      } else {
+        Navigator.pushNamed(context, '/Done');
+      }
       print("Start");
     }
 
     void levelsPressed() {
-      print("Navigate to Levels");
+      Navigator.pushNamed(context, '/LevelsMenu');
     }
-
-    void settPressed() {
-      player.play('Sounds/normal_click.mp3');
-      print("Settings");
-    }
+// PART OF THE SETTINGS FEATURE
+//    void settPressed() {
+//      player.play('Sounds/normal_click.mp3');
+//      print("Settings");
+//    }
 
     return MaterialApp(
       home: Scaffold(
@@ -98,16 +102,21 @@ class Menu extends StatelessWidget {
                         ),
                         onTapDown: (_) => dailyChallenge(),
                       ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: <Widget>[
-                          SpringButton(
-                            SpringButtonType.OnlyScale,
-                            settings(context),
-                            onTapDown: (_) => settPressed(),
-                          ),
-                        ],
+                      // Used to align Buttons correctly
+                      SizedBox(
+                        height: MediaQuery.of(context).size.height * 0.22,
                       )
+//SETTING FEATURE REMOVED FOR NOW
+//                      Row(
+//                        mainAxisAlignment: MainAxisAlignment.end,
+//                        children: <Widget>[
+//                          SpringButton(
+//                            SpringButtonType.OnlyScale,
+//                            settings(context),
+//                            onTapDown: (_) => settPressed(),
+//                          ),
+//                        ],
+//                      ),
                     ],
                   ),
                 ),
