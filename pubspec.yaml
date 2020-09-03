@@ -32,6 +32,8 @@ dependencies:
   intl: ^0.15.8
   shared_preferences: ^0.5.8
   audioplayers: ^0.15.1
+  auto_size_text: ^2.1.0
+
 
 
 

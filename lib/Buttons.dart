@@ -1,21 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:auto_size_text/auto_size_text.dart';
 
-Widget row(String text, Color color, BuildContext context) {
+Widget row(String text, Color color, double size, BuildContext context) {
+  final width = MediaQuery.of(context).size.width;
   return Padding(
     padding: EdgeInsets.all(12.5),
     child: Container(
-      width: MediaQuery.of(context).size.width * 0.43,
+      width: width * size,
       height: 50,
       decoration: BoxDecoration(
         color: color,
         borderRadius: const BorderRadius.all(const Radius.circular(10.0)),
       ),
       child: Center(
-        child: Text(
+        child: AutoSizeText(
           text,
           style: const TextStyle(
-              color: Colors.white, fontSize: 30, fontFamily: "Roboto_Bold"),
+              color: Colors.white, fontFamily: "Roboto_Bold", fontSize: 30),
         ),
       ),
     ),

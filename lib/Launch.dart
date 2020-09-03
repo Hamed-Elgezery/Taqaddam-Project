@@ -15,10 +15,14 @@ class Menu extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    void startPressed() {
+    void dailyChallenge() {
       player.play('Sounds/normal_click.mp3');
       Navigator.pushNamed(context, '/DailyChallenges');
       print("Start");
+    }
+
+    void levelsPressed() {
+      print("Navigate to Levels");
     }
 
     void settPressed() {
@@ -77,11 +81,22 @@ class Menu extends StatelessWidget {
                       SpringButton(
                         SpringButtonType.OnlyScale,
                         row(
-                          "Start",
+                          "Levels",
                           Colors.lightBlueAccent,
+                          0.63,
                           context,
                         ),
-                        onTapDown: (_) => startPressed(),
+                        onTapDown: (_) => levelsPressed(),
+                      ),
+                      SpringButton(
+                        SpringButtonType.OnlyScale,
+                        row(
+                          "Daily Challenge",
+                          Colors.redAccent,
+                          0.63,
+                          context,
+                        ),
+                        onTapDown: (_) => dailyChallenge(),
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.end,

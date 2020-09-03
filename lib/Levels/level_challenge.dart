@@ -1,27 +1,30 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:spring_button/spring_button.dart';
-import 'Drawer.dart';
-import 'Buttons.dart';
+import 'package:taqaddam/Drawer.dart';
+import 'package:taqaddam/Buttons.dart';
 import 'package:audioplayers/audio_cache.dart';
-import 'package:intl/intl.dart';
+import 'package:taqaddam/levelsStorage.dart';
+import 'dart:io';
 
-class DailyChallenge extends StatefulWidget {
+// ignore: must_be_immutable
+class Challenge extends StatefulWidget {
   @override
-  _DailyChallengeState createState() => _DailyChallengeState();
+  _ChallengeState createState() => _ChallengeState();
 }
 
-class _DailyChallengeState extends State<DailyChallenge> {
+class _ChallengeState extends State<Challenge> {
   var now = new DateTime.now();
   static AudioCache player = AudioCache();
 
-  String daysStreak = '0';
-  List<String> title = ["Why don't you go and make someone's day?!\n\n"];
-  List<String> challenges = [
-    "Write something meaningful on a piece of paper and put it on a random car!"
-  ];
+//  String daysStreak = '0';
+//  List<String> title = ["Why don't you go and make someone's day?!\n\n"];
+//  List<String> challenges = [
+//    "Write something meaningful on a piece of paper and put it on a random car!"
+//  ];
 
   @override
+  // ignore: must_call_super
   void initState() {
     player.loadAll(['Sounds/normal_click.mp3', 'Sounds/normal_click.mp3']);
   }
@@ -30,11 +33,17 @@ class _DailyChallengeState extends State<DailyChallenge> {
   Widget build(BuildContext context) {
     void completedPressed() {
       player.play('Sounds/completed.mp3');
+      if (level + 1 < levels.length) {
+        setState(() {
+          level++;
+        });
+      } else {
+        //TODO: Navigate to coming soon
+      }
     }
 
-    void skipPressed() {
-      player.play('Sounds/normal_click.mp3');
-      Navigator.pop(context, '/DailyChallenges');
+    void backPressed() {
+      //TODO: Part of connecting all pages together
     }
 
     return Scaffold(
@@ -44,31 +53,22 @@ class _DailyChallengeState extends State<DailyChallenge> {
         child: AppBar(
           automaticallyImplyLeading: false,
           title: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: <Widget>[
               Text(
-                'Daily Challenge',
+                'Level ' + (level + 1).toString(),
                 style: TextStyle(
                     fontSize: MediaQuery.of(context).size.width * 0.07,
                     fontFamily: 'Roboto_Bold'),
               ),
-              Container(
-                margin: EdgeInsets.only(left: 60),
-                child: Column(
-                  children: <Widget>[
-                    Image.asset(
-                      'Images/streakUndone.png',
-                      width: MediaQuery.of(context).size.width * 0.1,
-                      height: MediaQuery.of(context).size.width * 0.1,
-                    ),
-                    Text(
-                      daysStreak,
-                      style: TextStyle(),
-                    ),
-                  ],
-                ),
-              )
             ],
+          ),
+          leading: FlatButton(
+            child: Icon(
+              CupertinoIcons.back,
+              color: Colors.white,
+              size: MediaQuery.of(context).size.width * 0.08,
+            ),
+            onPressed: () => print('Pressed\n'),
           ),
         ),
       ),
@@ -86,14 +86,14 @@ class _DailyChallengeState extends State<DailyChallenge> {
                 child: RichText(
                   textAlign: TextAlign.center,
                   text: TextSpan(
-                    text: title[0],
+                    text: levelsIntro[level],
                     style: TextStyle(
                         color: Colors.black,
                         fontSize: 25,
                         fontFamily: "Roboto_Bold"),
                     children: <TextSpan>[
                       TextSpan(
-                        text: challenges[0],
+                        text: levels[level],
                         style: TextStyle(
                             fontFamily: "Overlock-Regular", fontSize: 20),
                       ),
@@ -104,20 +104,12 @@ class _DailyChallengeState extends State<DailyChallenge> {
               Container(
                 padding: EdgeInsets.only(top: 200),
                 margin: EdgeInsets.only(bottom: 60, left: 5),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: <Widget>[
-                    SpringButton(
-                      SpringButtonType.OnlyScale,
-                      row('Completed!', Colors.greenAccent, 0.43, context),
-                      onTapDown: (_) => completedPressed(),
-                    ),
-                    SpringButton(
-                      SpringButtonType.OnlyScale,
-                      row('Skip!', Colors.redAccent, 0.43, context),
-                      onTapDown: (_) => skipPressed(),
-                    ),
-                  ],
+                child: Center(
+                  child: SpringButton(
+                    SpringButtonType.OnlyScale,
+                    row('Completed!', Colors.greenAccent, 0.5, context),
+                    onTapDown: (_) => completedPressed(),
+                  ),
                 ),
               ),
             ],
