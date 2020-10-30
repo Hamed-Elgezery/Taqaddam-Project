@@ -3,36 +3,30 @@ import 'package:spring_button/spring_button.dart';
 import 'package:flutter/cupertino.dart';
 import 'Drawer.dart';
 import 'Buttons.dart';
-import 'package:audioplayers/audio_cache.dart';
+import 'dart:math';
+// import 'package:audioplayers/audio_cache.dart';
 import 'levelsStorage.dart';
 
 class Menu extends StatelessWidget {
-  static AudioCache player = AudioCache();
+  // static AudioCache player = AudioCache();
 
-  void initState() {
-    player.load('Sounds/normal_click.mp3');
-  }
+  // void initState() {
+  //   player.load('Sounds/normal_click.mp3');
+  // }
 
   @override
   Widget build(BuildContext context) {
+    final double width = MediaQuery.of(context).size.width;
+    final double height = MediaQuery.of(context).size.height;
+
     void dailyChallenge() {
-      player.play('Sounds/normal_click.mp3');
-      if (daily.length != 0) {
-        Navigator.pushNamed(context, '/DailyChallenges');
-      } else {
-        Navigator.pushNamed(context, '/Done');
-      }
-      print("Start");
+      Navigator.pushNamed(
+          context, (daily.length != 0) ? '/DailyChallenges' : '/Done');
     }
 
     void levelsPressed() {
       Navigator.pushNamed(context, '/LevelsMenu');
     }
-// PART OF THE SETTINGS FEATURE
-//    void settPressed() {
-//      player.play('Sounds/normal_click.mp3');
-//      print("Settings");
-//    }
 
     return MaterialApp(
       home: Scaffold(
@@ -42,27 +36,23 @@ class Menu extends StatelessWidget {
           child: CustomPaint(
             painter: CurvePainter(),
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: <Widget>[
-                SizedBox(
-                  height: 140,
-                ),
-                Expanded(
-                  flex: 1,
+                Container(
                   child: RichText(
                     textAlign: TextAlign.center,
                     text: TextSpan(
                       text: 'Welcome\n',
                       style: TextStyle(
                           color: Colors.black,
-                          fontSize: 50,
+                          fontSize: [width, height].reduce(min) * 0.1,
                           fontFamily: "Roboto_Bold"),
                       children: <TextSpan>[
                         TextSpan(
                           text: 'Ready for Some ',
                           style: TextStyle(
                               color: Colors.black,
-                              fontSize: 30,
+                              fontSize: [width, height].reduce(min) * 0.06,
                               fontFamily: "Roboto_Light"),
                         ),
                         TextSpan(
@@ -70,42 +60,64 @@ class Menu extends StatelessWidget {
                           style: TextStyle(
                               fontWeight: FontWeight.bold,
                               color: Colors.redAccent,
-                              fontSize: 30,
+                              fontSize: [width, height].reduce(min) * 0.07,
                               fontFamily: "Roboto_Light"),
                         ),
                       ],
                     ),
                   ),
                 ),
-                Expanded(
-                  flex: 1,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: <Widget>[
-                      SpringButton(
-                        SpringButtonType.OnlyScale,
-                        row(
-                          "Levels",
-                          Colors.lightBlueAccent,
-                          0.63,
-                          context,
+                Center(
+                  child: Container(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: <Widget>[
+                        SpringButton(
+                          SpringButtonType.OnlyScale,
+                          row(
+                            "Levels",
+                            Colors.lightBlueAccent,
+                            0.5,
+                            0.08,
+                            context,
+                          ),
+                          onTapDown: (_) => levelsPressed(),
                         ),
-                        onTapDown: (_) => levelsPressed(),
-                      ),
-                      SpringButton(
-                        SpringButtonType.OnlyScale,
-                        row(
-                          "Daily Challenge",
-                          Colors.redAccent,
-                          0.63,
-                          context,
+                        Container(
+                          margin: EdgeInsets.only(bottom: height * 0.17),
+                          child: FittedBox(
+                            child: SpringButton(
+                              SpringButtonType.OnlyScale,
+                              row(
+                                "Daily Challenge",
+                                Colors.redAccent,
+                                0.5,
+                                0.08,
+                                context,
+                              ),
+                              onTapDown: (_) => dailyChallenge(),
+                            ),
+                          ),
                         ),
-                        onTapDown: (_) => dailyChallenge(),
-                      ),
-                      // Used to align Buttons correctly
-                      SizedBox(
-                        height: MediaQuery.of(context).size.height * 0.22,
-                      )
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+///////////////DRAFT////////////////
+
+// Used to align Buttons correctly
+// SizedBox(
+//   height: MediaQuery.of(context).size.height * 0.22,
+// )
 //SETTING FEATURE REMOVED FOR NOW
 //                      Row(
 //                        mainAxisAlignment: MainAxisAlignment.end,
@@ -117,14 +129,9 @@ class Menu extends StatelessWidget {
 //                          ),
 //                        ],
 //                      ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-}
+
+// PART OF THE SETTINGS FEATURE
+//    void settPressed() {
+//      player.play('Sounds/normal_click.mp3');
+//      print("Settings");
+//    }

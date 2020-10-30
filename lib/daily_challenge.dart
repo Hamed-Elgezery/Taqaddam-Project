@@ -22,6 +22,9 @@ class _DailyChallengeState extends State<DailyChallenge> {
 
   @override
   Widget build(BuildContext context) {
+    final double width = MediaQuery.of(context).size.width;
+    final double height = MediaQuery.of(context).size.height;
+
     void completedPressed() {
       player.play('Sounds/completed.mp3');
       Navigator.popAndPushNamed(context, '/Done');
@@ -36,40 +39,47 @@ class _DailyChallengeState extends State<DailyChallenge> {
     }
 
     void prevPage() {
-      Navigator.pop(context, '/DailyChallenges');
-      player.play('Sounds/normal_click.mp3');
+      Navigator.pop(context);
     }
 
-    if (daily.length == 0) {
-      Navigator.popAndPushNamed(context, '/Done');
-    } else {
-      return Scaffold(
+    return Scaffold(
         appBar: PreferredSize(
-          preferredSize: Size.fromHeight(MediaQuery.of(context).size.height *
-              0.09), //Setting height of AppBar
+          preferredSize: Size.fromHeight(height * 0.09),
           child: AppBar(
-            title: Row(
-              children: <Widget>[
-                Text(
-                  'Daily Challenge',
-                  style: TextStyle(
-                      fontSize: MediaQuery.of(context).size.width * 0.07,
-                      fontFamily: 'Roboto_Bold'),
-                ),
-              ],
-            ),
-            leading: FlatButton(
-              child: Icon(
-                CupertinoIcons.back,
-                color: Colors.white,
-                size: MediaQuery.of(context).size.width * 0.08,
+            automaticallyImplyLeading: false, // hides leading widget
+            flexibleSpace: Center(
+              child: Stack(
+                children: <Widget>[
+                  Container(
+                    alignment: Alignment.centerLeft,
+                    child: FlatButton(
+                      child: Container(
+                        child: Icon(
+                          CupertinoIcons.back,
+                          color: Colors.white,
+                          size: MediaQuery.of(context).size.width * 0.08,
+                        ),
+                      ),
+                      onPressed: () => prevPage(),
+                    ),
+                  ),
+                  Center(
+                    child: Text(
+                      'Daily Challenge',
+                      style: TextStyle(
+                          fontSize: MediaQuery.of(context).size.width * 0.08,
+                          fontFamily: 'Roboto_Light',
+                          color: Colors.white,
+                          letterSpacing: 2),
+                    ),
+                  ),
+                ],
               ),
-              onPressed: () => prevPage(),
             ),
           ),
         ),
         body: Container(
-          width: MediaQuery.of(context).size.width,
+          width: width,
           color: Colors.white,
           child: CustomPaint(
             painter: CurvePainter(),
@@ -77,40 +87,45 @@ class _DailyChallengeState extends State<DailyChallenge> {
               children: <Widget>[
                 Container(
                   padding: EdgeInsets.only(
-                      top: MediaQuery.of(context).size.height * 0.08),
-                  height: MediaQuery.of(context).size.height * 0.3,
+                    top: height * 0.05,
+                    right: width * 0.04,
+                    left: width * 0.04,
+                  ),
+                  height: height * 0.3,
                   child: RichText(
                     textAlign: TextAlign.center,
                     text: TextSpan(
                       text: dailyIntro[dailyNum],
                       style: TextStyle(
                           color: Colors.black,
-                          fontSize: 25,
+                          fontSize: width * 0.05,
                           fontFamily: "Roboto_Bold"),
                       children: <TextSpan>[
                         TextSpan(
                           text: daily[dailyNum],
                           style: TextStyle(
-                              fontFamily: "Overlock-Regular", fontSize: 20),
+                              fontFamily: "Overlock-Regular",
+                              fontSize: width * 0.04),
                         ),
                       ],
                     ),
                   ),
                 ),
                 Container(
-                  padding: EdgeInsets.only(top: 200),
-                  margin: EdgeInsets.only(bottom: 60, left: 5),
+                  margin: EdgeInsets.only(top: height * 0.2),
                   child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: <Widget>[
                       SpringButton(
                         SpringButtonType.OnlyScale,
-                        row('Completed!', Colors.greenAccent, 0.43, context),
+                        row('Completed!', Colors.greenAccent, 0.4, 0.1,
+                            context),
                         onTapDown: (_) => completedPressed(),
                       ),
                       SpringButton(
                         SpringButtonType.OnlyScale,
-                        row('Switch!', Colors.lightBlueAccent, 0.43, context),
+                        row('Switch!', Colors.lightBlueAccent, 0.4, 0.1,
+                            context),
                         onTapDown: (_) => switchPressed(),
                       ),
                     ],
@@ -119,9 +134,7 @@ class _DailyChallengeState extends State<DailyChallenge> {
               ],
             ),
           ),
-        ),
-      );
-    }
+        ));
   }
 }
 
