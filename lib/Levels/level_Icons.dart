@@ -4,11 +4,16 @@ import 'package:flutter/cupertino.dart';
 import 'package:taqaddam/levelsStorage.dart';
 // import 'package:shared_preferences/shared_preferences.dart';
 
-class ButtonDesign extends StatelessWidget {
+class ButtonDesign extends StatefulWidget {
   ButtonDesign(this.levelNumber);
 
   final int levelNumber;
 
+  @override
+  _ButtonDesignState createState() => _ButtonDesignState();
+}
+
+class _ButtonDesignState extends State<ButtonDesign> {
   @override
   Widget build(BuildContext context) {
     final Radius radius =
@@ -20,14 +25,14 @@ class ButtonDesign extends StatelessWidget {
       height: MediaQuery.of(context).size.width * 0.26,
       decoration: BoxDecoration(
         // ignore: unrelated_type_equality_checks
-        color: (levelsDone[levelNumber - 1] == 1)
+        color: (levelsDone[widget.levelNumber - 1] == 1)
             ? Colors.yellow
             : Colors.blueAccent,
         borderRadius: BorderRadius.all(radius),
       ),
       child: Center(
         child: Text(
-          levelNumber.toString(),
+          widget.levelNumber.toString(),
           style: TextStyle(
             fontSize: fSize,
             color: Colors.white,
@@ -39,20 +44,26 @@ class ButtonDesign extends StatelessWidget {
   }
 }
 
-class LevelButton extends StatelessWidget {
+class LevelButton extends StatefulWidget {
   LevelButton(this.levelID);
   final int levelID;
 
   @override
+  _LevelButtonState createState() => _LevelButtonState();
+}
+
+class _LevelButtonState extends State<LevelButton> {
+  @override
   Widget build(BuildContext context) {
     void pressed() {
-      level = levelID - 1;
+      level = widget.levelID - 1;
+      done = levelsDone[level];
       Navigator.popAndPushNamed(context, '/Challenge');
     }
 
     return SpringButton(
       SpringButtonType.OnlyScale,
-      ButtonDesign(levelID),
+      ButtonDesign(widget.levelID),
       onTapDown: (_) => pressed(),
     );
   }

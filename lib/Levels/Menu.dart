@@ -72,33 +72,36 @@ class _LevelsMenuState extends State<LevelsMenu> {
         child: AppBar(
           automaticallyImplyLeading: false, // hides leading widget
           flexibleSpace: Center(
-            child: Stack(
-              children: <Widget>[
-                Container(
-                  alignment: Alignment.centerLeft,
-                  child: FlatButton(
-                    child: Container(
-                      child: Icon(
-                        CupertinoIcons.back,
+            child: Container(
+              margin: EdgeInsets.only(top: height * 0.04),
+              child: Stack(
+                children: <Widget>[
+                  Container(
+                    alignment: Alignment.centerLeft,
+                    child: FlatButton(
+                      child: Container(
+                        child: Icon(
+                          CupertinoIcons.back,
+                          color: Colors.white,
+                          size: width * 0.08,
+                        ),
+                      ),
+                      onPressed: () => prevPage(),
+                    ),
+                  ),
+                  Center(
+                    child: Text(
+                      'Levels',
+                      style: TextStyle(
+                        fontSize: width * 0.08,
+                        fontFamily: 'Roboto_Light',
                         color: Colors.white,
-                        size: width * 0.08,
+                        letterSpacing: 2,
                       ),
                     ),
-                    onPressed: () => prevPage(),
                   ),
-                ),
-                Center(
-                  child: Text(
-                    'Levels',
-                    style: TextStyle(
-                      fontSize: width * 0.08,
-                      fontFamily: 'Roboto_Light',
-                      color: Colors.white,
-                      letterSpacing: 2,
-                    ),
-                  ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         ),

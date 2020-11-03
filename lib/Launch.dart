@@ -74,13 +74,11 @@ class Menu extends StatelessWidget {
                       children: <Widget>[
                         SpringButton(
                           SpringButtonType.OnlyScale,
-                          row(
-                            "Levels",
-                            Colors.lightBlueAccent,
-                            0.5,
-                            0.08,
-                            context,
-                          ),
+                          ButtonRow(
+                              text: "Levels",
+                              color: Colors.lightBlueAccent,
+                              sizeW: 0.5,
+                              sizeH: 0.08),
                           onTapDown: (_) => levelsPressed(),
                         ),
                         Container(
@@ -88,13 +86,11 @@ class Menu extends StatelessWidget {
                           child: FittedBox(
                             child: SpringButton(
                               SpringButtonType.OnlyScale,
-                              row(
-                                "Daily Challenge",
-                                Colors.redAccent,
-                                0.5,
-                                0.08,
-                                context,
-                              ),
+                              ButtonRow(
+                                  text: "Daily Challenge",
+                                  color: Colors.redAccent,
+                                  sizeW: 0.5,
+                                  sizeH: 0.08),
                               onTapDown: (_) => dailyChallenge(),
                             ),
                           ),

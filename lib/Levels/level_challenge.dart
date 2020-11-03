@@ -15,6 +15,7 @@ class Challenge extends StatefulWidget {
 
 class _ChallengeState extends State<Challenge> {
   static AudioCache player = AudioCache();
+
   @override
   // ignore: must_call_super
   void initState() {
@@ -25,30 +26,54 @@ class _ChallengeState extends State<Challenge> {
   Widget build(BuildContext context) {
     final double width = MediaQuery.of(context).size.width;
     final double height = MediaQuery.of(context).size.height;
-
-    void setPref() async {
+    List<Color> doneUndoneColors = <Color>[
+      Colors.greenAccent,
+      Colors.redAccent,
+    ];
+    List<String> doneUndoneText = <String>[
+      'Done!',
+      'Undo!',
+    ];
+    void setPref(int val) async {
       //This part will set that this
-      // level is done in shared preference
+      //level is done in shared preference
       final prefs = await SharedPreferences.getInstance();
-      await prefs.setBool('_$level', true);
+      await prefs.setBool('_$level', (val == 1) ? true : false);
+    }
 
-      if (level + 1 < levels.length) {
-        setState(() {
-          level++;
-        });
-      } else {
-        Navigator.popAndPushNamed(context, '/ComingSoon');
-      }
+    // void next() {
+    //   if (level + 1 < levels.length) {
+    //     setState(() {
+    //       level++;
+    //       done = levelsDone[level];
+    //     });
+    //   } else {
+    //     Navigator.popAndPushNamed(context, '/ComingSoon');
+    //   }
+    // }
+
+    void prevPage() {
+      Navigator.popAndPushNamed(context, '/LevelsMenu');
     }
 
     void completedPressed() {
       player.play('Sounds/completed.mp3');
       levelsDone[level] = 1;
-      setPref();
+      setState(() {
+        done = 1;
+      });
+      setPref(1);
+      prevPage();
     }
 
-    void prevPage() {
-      Navigator.popAndPushNamed(context, '/LevelsMenu');
+    void undo() {
+      player.play('Sounds/normal_click.mp3');
+      levelsDone[level] = 0;
+      setState(() {
+        done = 0;
+      });
+      setPref(0);
+      prevPage();
     }
 
     return Scaffold(
@@ -57,32 +82,35 @@ class _ChallengeState extends State<Challenge> {
         child: AppBar(
           automaticallyImplyLeading: false, // hides leading widget
           flexibleSpace: Center(
-            child: Stack(
-              children: <Widget>[
-                Container(
-                  alignment: Alignment.centerLeft,
-                  child: FlatButton(
-                    child: Container(
-                      child: Icon(
-                        CupertinoIcons.back,
-                        color: Colors.white,
-                        size: MediaQuery.of(context).size.width * 0.08,
+            child: Container(
+              margin: EdgeInsets.only(top: height * 0.04),
+              child: Stack(
+                children: <Widget>[
+                  Container(
+                    alignment: Alignment.centerLeft,
+                    child: FlatButton(
+                      child: Container(
+                        child: Icon(
+                          CupertinoIcons.back,
+                          color: Colors.white,
+                          size: MediaQuery.of(context).size.width * 0.08,
+                        ),
                       ),
+                      onPressed: () => prevPage(),
                     ),
-                    onPressed: () => prevPage(),
                   ),
-                ),
-                Center(
-                  child: Text(
-                    'Level ' + (level + 1).toString(),
-                    style: TextStyle(
-                        fontSize: MediaQuery.of(context).size.width * 0.08,
-                        fontFamily: 'Roboto_Light',
-                        color: Colors.white,
-                        letterSpacing: 2),
+                  Center(
+                    child: Text(
+                      'Level ' + (level + 1).toString(),
+                      style: TextStyle(
+                          fontSize: MediaQuery.of(context).size.width * 0.08,
+                          fontFamily: 'Roboto_Light',
+                          color: Colors.white,
+                          letterSpacing: 2),
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         ),
@@ -96,7 +124,7 @@ class _ChallengeState extends State<Challenge> {
             children: <Widget>[
               Container(
                 padding: EdgeInsets.only(
-                  top: height * 0.05,
+                  top: height * 0.08,
                   right: width * 0.04,
                   left: width * 0.04,
                 ),
@@ -120,15 +148,41 @@ class _ChallengeState extends State<Challenge> {
                   ),
                 ),
               ),
-              Container(
-                padding: EdgeInsets.only(top: height * 0.2),
-                child: Center(
-                  child: SpringButton(
-                    SpringButtonType.OnlyScale,
-                    row('Done!', Colors.greenAccent, 0.4, 0.1, context),
-                    onTapDown: (_) => completedPressed(),
+              Column(
+                children: <Widget>[
+                  Container(
+                    padding: EdgeInsets.only(top: height * 0.1),
+                    child: Center(
+                      child: SpringButton(
+                        SpringButtonType.OnlyScale,
+                        ButtonRow(
+                            text: doneUndoneText[done],
+                            color: doneUndoneColors[done],
+                            sizeW: 0.4,
+                            sizeH: 0.1),
+                        onTapDown: (_) {
+                          if (done == 1)
+                            undo();
+                          else
+                            completedPressed();
+                        },
+                      ),
+                    ),
                   ),
-                ),
+                  // Container(
+                  //   child: Center(
+                  //     child: SpringButton(
+                  //       SpringButtonType.OnlyScale,
+                  //       ButtonRow(
+                  //           text: 'Next!',
+                  //           color: Colors.lightBlueAccent,
+                  //           sizeW: 0.4,
+                  //           sizeH: 0.1),
+                  //       onTapDown: (_) => next(),
+                  //     ),
+                  //   ),
+                  // ),
+                ],
               ),
             ],
           ),

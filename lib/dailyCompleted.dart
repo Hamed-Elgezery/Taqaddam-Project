@@ -27,35 +27,38 @@ class DailyCompleted extends StatelessWidget {
         child: AppBar(
           automaticallyImplyLeading: false, // hides leading widget
           flexibleSpace: Center(
-            child: Stack(
-              children: <Widget>[
-                Container(
-                  alignment: Alignment.centerLeft,
-                  child: FlatButton(
+            child: Container(
+              margin: EdgeInsets.only(top: height * 0.04),
+              child: Stack(
+                children: <Widget>[
+                  Container(
+                    alignment: Alignment.centerLeft,
+                    child: FlatButton(
+                      child: Container(
+                        child: Icon(
+                          CupertinoIcons.back,
+                          color: Colors.white,
+                          size: MediaQuery.of(context).size.width * 0.08,
+                        ),
+                      ),
+                      onPressed: () => prevPage(),
+                    ),
+                  ),
+                  Center(
                     child: Container(
-                      child: Icon(
-                        CupertinoIcons.back,
-                        color: Colors.white,
-                        size: MediaQuery.of(context).size.width * 0.08,
+                      alignment: Alignment.center,
+                      child: Text(
+                        'Daily Challenge',
+                        style: TextStyle(
+                            fontSize: MediaQuery.of(context).size.width * 0.08,
+                            fontFamily: 'Roboto_Light',
+                            color: Colors.white,
+                            letterSpacing: 2),
                       ),
                     ),
-                    onPressed: () => prevPage(),
                   ),
-                ),
-                Center(
-                  child: Container(
-                    alignment: Alignment.center,
-                    child: Text(
-                      'Daily Challenge',
-                      style: TextStyle(
-                          fontSize: MediaQuery.of(context).size.width * 0.08,
-                          fontFamily: 'Roboto_Light',
-                          color: Colors.white,
-                          letterSpacing: 2),
-                    ),
-                  ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         ),

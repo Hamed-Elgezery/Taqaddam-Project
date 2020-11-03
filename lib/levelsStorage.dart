@@ -14,6 +14,7 @@ List daily = [
 ];
 
 int level = 0;
+int done = 0;
 //Used in daily challenges
 List levelsIntro = [
   "Family\n\n",

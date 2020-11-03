@@ -19,9 +19,7 @@ class MainNav extends StatefulWidget {
 }
 
 class _MainNavState extends State<MainNav> {
-  @override
-  // ignore: must_call_super
-  void initState() async {
+  void levels() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     for (int i = 0; i < levelsDone.length; i++) {
       bool val = prefs.getBool('_$i');
@@ -30,6 +28,12 @@ class _MainNavState extends State<MainNav> {
       else
         levelsDone[i] = 1;
     }
+  }
+
+  @override
+  // ignore: must_call_super
+  void initState() {
+    levels();
   }
 
   @override

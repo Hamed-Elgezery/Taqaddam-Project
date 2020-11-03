@@ -48,32 +48,35 @@ class _DailyChallengeState extends State<DailyChallenge> {
           child: AppBar(
             automaticallyImplyLeading: false, // hides leading widget
             flexibleSpace: Center(
-              child: Stack(
-                children: <Widget>[
-                  Container(
-                    alignment: Alignment.centerLeft,
-                    child: FlatButton(
-                      child: Container(
-                        child: Icon(
-                          CupertinoIcons.back,
-                          color: Colors.white,
-                          size: MediaQuery.of(context).size.width * 0.08,
+              child: Container(
+                margin: EdgeInsets.only(top: height * 0.04),
+                child: Stack(
+                  children: <Widget>[
+                    Container(
+                      alignment: Alignment.centerLeft,
+                      child: FlatButton(
+                        child: Container(
+                          child: Icon(
+                            CupertinoIcons.back,
+                            color: Colors.white,
+                            size: MediaQuery.of(context).size.width * 0.08,
+                          ),
                         ),
+                        onPressed: () => prevPage(),
                       ),
-                      onPressed: () => prevPage(),
                     ),
-                  ),
-                  Center(
-                    child: Text(
-                      'Daily Challenge',
-                      style: TextStyle(
-                          fontSize: MediaQuery.of(context).size.width * 0.08,
-                          fontFamily: 'Roboto_Light',
-                          color: Colors.white,
-                          letterSpacing: 2),
+                    Center(
+                      child: Text(
+                        'Daily Challenge',
+                        style: TextStyle(
+                            fontSize: MediaQuery.of(context).size.width * 0.08,
+                            fontFamily: 'Roboto_Light',
+                            color: Colors.white,
+                            letterSpacing: 2),
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
           ),
@@ -118,14 +121,20 @@ class _DailyChallengeState extends State<DailyChallenge> {
                     children: <Widget>[
                       SpringButton(
                         SpringButtonType.OnlyScale,
-                        row('Completed!', Colors.greenAccent, 0.4, 0.1,
-                            context),
+                        ButtonRow(
+                            text: 'Completed!',
+                            color: Colors.greenAccent,
+                            sizeW: 0.4,
+                            sizeH: 0.1),
                         onTapDown: (_) => completedPressed(),
                       ),
                       SpringButton(
                         SpringButtonType.OnlyScale,
-                        row('Switch!', Colors.lightBlueAccent, 0.4, 0.1,
-                            context),
+                        ButtonRow(
+                            text: 'Switch!',
+                            color: Colors.lightBlueAccent,
+                            sizeW: 0.4,
+                            sizeH: 0.1),
                         onTapDown: (_) => switchPressed(),
                       ),
                     ],
